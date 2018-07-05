@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>vue-demo-02: todo</title>
+    <style>
+        [v-cloak]{
+            display: none
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="newTask">
+        <input type="text" v-model="newTodo" @keypress.enter="addTodo">
+    </div>
+    <ol class="todos" >
+        <li v-for="item in todoList">
+            <input type="checkbox" v-model="item.done" v-cloak>
+            {{item.title}}
+            <span v-if="item.done">已完成</span>
+            <span v-else>未完成</span>
+            <button @click="removeTodo(item)">X</button>
+        </li>
+    </ol>
+</div>
+<script src="dist/bundle.js"></script>
+
+</body>
+</html>
