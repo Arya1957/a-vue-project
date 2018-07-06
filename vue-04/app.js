@@ -33,14 +33,12 @@ let app = new Vue({
             if (this.currentUser) {
                 let query = new AV.Query('TodoFolder');
                 query.find().then( (todos) => {
+
                     let todoFolder = todos[0];
 // console.log(JSON.parse(todoFolder.attributes.content));
                     this.todoList = JSON.parse(todoFolder.attributes.content);
                     this.todoList.id = todoFolder.id;
-                    console.log(this.todoList.id);
-
                     console.log(this.todoList);
-
                 }, function (error) {
                     console.log('error')
                 });
@@ -50,7 +48,9 @@ let app = new Vue({
             let str = JSON.stringify(this.todoList);
             let todoFolder = AV.Object.createWithoutData('TodoFolder', this.todoList.id);
             todoFolder.set('content', str);
-            todoFolder.save().then(() => {
+            todoFolder.save().then((todos) => {
+                console.log(todos);
+
                 console.log('这是UpdateTodos');
             })
         },
@@ -105,6 +105,7 @@ let app = new Vue({
             // 设置密码
             user.setPassword(this.formData.password);
             user.signUp().then((loggedInUser) => {
+               //  console.log(loggedInUser);
                 this.currentUser = this.getCurrentUser();
             }, function (error) {
                 alert('注册失败')
@@ -112,6 +113,7 @@ let app = new Vue({
         },
         login: function () {
             AV.User.logIn(this.formData.username, this.formData.password).then((loggedInUser) => {
+              //  console.log(loggedInUser);
                 this.currentUser = this.getCurrentUser();
                 this.fetchTodos();//  登录成功后获取TODO
             }, function (error) {
@@ -138,6 +140,7 @@ let app = new Vue({
             AV.User.logOut();
             // 现在的 currentUser 是 null 了
             this.currentUser = AV.User.current();
+            // console.log(this.currentUser)
         }
 
     }
