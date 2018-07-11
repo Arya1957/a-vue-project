@@ -1,2 +1,4 @@
-# resume-1.0
-vue.js
+#  a vue project
+
+learn vue
+

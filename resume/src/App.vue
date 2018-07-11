@@ -20,15 +20,13 @@
   import ResumeEditor from './components/ResumeEditor.vue'
   import ResumePreview from './components/ResumePreview.vue'
   import icons from './assets/icons.js'
+  import store from './store/index.js'
 
 
   export default {
     name: 'app',
-    data: function () {
-      return {
-        text: '你好呀~ '
-      }
-    },
+    store,
+    //  通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。
     components: {TopBar, ResumeEditor, ResumePreview},
     created: function (){
       document.body.insertAdjacentHTML('afterbegin',icons)
@@ -59,7 +57,7 @@
     }
   }
   #resumeEditor {
-    width: 35%;
+    min-width: 35%;
     background: #444;
 
   }
