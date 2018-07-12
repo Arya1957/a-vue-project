@@ -1,5 +1,7 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+import objectPath from "object-path"
+
 Vue.use(Vuex);
 
 
@@ -18,13 +20,15 @@ export default  new Vuex.Store({
       profile: {
         name: '暖暖',
         city: '天天',
+        title: 'xxxx',
+        birthday: '2000-01-01'
       },
       workHistory: [
         {company: '', content: '我的第二份工作是'},
         {company: '', content: '我的第一份工作是'}
       ],
       education: [
-        {school: '',major: ''}
+        {school: 'xxxx',major: 'xxxx'}
       ],
       projects: [
         {name: 'projectA',content: 'detailed info.'},
@@ -35,8 +39,8 @@ export default  new Vuex.Store({
         {name: 'awards B',content: 'detailed info.'}
       ],
       contacts: [
-        {contacts: 'phone',content: '133444'},
-        {contacts: 'weixin',content: '638890002'}
+        {contact: 'phone',content: '133444'},
+        {contact: 'weixin',content: '638890002'}
       ],
     }
   },
@@ -49,9 +53,28 @@ export default  new Vuex.Store({
     },
     switchTab (state,payload){
        state.selected = payload
+    },
+    updateResume (state,{path,value}){
+      objectPath.set(state.resume,path,value);
+      console.log(state.resume)
     }
   }
 })
+
+/*
+let obj = {
+  a: {
+    b: "d",
+    c: ["e", "f"],
+    '\u1200': 'unicode key',
+    'dot.dot': 'key',
+    test: [{name: 'xxx1',content: 'test1'},{name: 'xxx2',content: 'test2'}]
+  }
+};
+objectPath.set(obj, "a.test.1.name", "newName");
+console.log(obj);
+*/
+
 
 
 
