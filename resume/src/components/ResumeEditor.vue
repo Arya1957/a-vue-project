@@ -63,8 +63,6 @@
     },
     methods: {
       changeResumeField: function (path, value) {
-        console.log(path);
-        console.log(value);
         this.$store.commit('updateResume', {
           path,
           value

@@ -1,14 +1,16 @@
 <template>
-  <div class="page">
-    <header>
-      <TopBar/>
-    </header>
-    <main>
-      <ResumeEditor/>
-      <ResumePreview/>
-    </main>
+ <div>
+   <div class="page">
+     <header>
+       <TopBar/>
+     </header>
+     <main>
+       <ResumeEditor/>
+       <ResumePreview/>
+     </main>
 
-  </div>
+   </div>
+ </div>
 
 </template>
 
@@ -21,7 +23,8 @@
   import ResumePreview from './components/ResumePreview.vue'
   import icons from './assets/icons.js'
   import store from './store/index.js'
-
+  import AV from './lib/leancloud.js'
+  import getAVUser from './lib/getAVUser.js'
 
   export default {
     name: 'app',
@@ -29,9 +32,16 @@
     //  通过在根实例中注册 store 选项，该 store 实例会注入到根组件下的所有子组件中，且子组件能通过 this.$store 访问到。
     components: {TopBar, ResumeEditor, ResumePreview},
     created: function (){
-      document.body.insertAdjacentHTML('afterbegin',icons)
-    }
+      document.body.insertAdjacentHTML('afterbegin',icons);
+      let data = localStorage.getItem('data');
+      if(data) {
+        data = JSON.parse(data);
+      //  console.log(data)
+      }
 
+      this.$store.commit('initState',data);
+      this.$store.commit('setUser',getAVUser())
+    }
   }
 </script>
 
