@@ -7,7 +7,7 @@
       <div class="actions">
 
         <div v-if="logined" class="userActions">
-          <span>你好，{{user.username}}</span>
+          <span class="welcome">你好，{{user.username}}</span>
           <a href="#" class="button"
           v-on:click.prevent="signOut">登出</a>
         </div>
@@ -15,12 +15,16 @@
           <a href="#" class="button primary"
              v-on:click.prevent="signUpDialogVisible = true"
           >注册</a>
+
+          <a href="#" class="button" v-on:click.prevent="signInDialogVisible=true">登录</a>
           <MyDialog
             title="注册" v-bind:visible="signUpDialogVisible"
             v-on:close="signUpDialogVisible=false">
             <signUpForm v-on:success="signIn($event)"></signUpForm>
           </MyDialog>
-          <a href="#" class="button">登录</a>
+          <MyDialog title="登录" v-bind:visible="signInDialogVisible" v-on:close="signInDialogVisible=false">
+            <SignInForm v-on:success="signIn($event)"></SignInForm>
+          </MyDialog>
         </div>
         <button class="button primary">保存</button>
         <button class="button">预览</button>
@@ -32,13 +36,16 @@
 <script>
   import MyDialog from './MyDialog.vue'
   import SignUpForm from './SignUpForm.vue'
+  import SignInForm from './SignInForm.vue'
   import AV from '../lib/leancloud.js'
+
 
   export default {
     name: 'TopBar',
     data: function () {
       return {
-        signUpDialogVisible: false
+        signUpDialogVisible: false,
+        signInDialogVisible: false
       }
     },
     computed: {
@@ -51,12 +58,14 @@
     },
     components: {
       SignUpForm,
+      SignInForm,
       MyDialog
     },
     methods: {
       signIn(user) {
         console.log(user);
         this.signUpDialogVisible = false;
+        this.signInDialogVisible = false;
         this.$store.commit('setUser', user)
       },
       signOut(){
@@ -115,6 +124,9 @@
     display: flex;
     .userActions {
       margin-right: 3em;
+      .welcome {
+        margin-right: 0.5em;
+      }
     }
   }
 
